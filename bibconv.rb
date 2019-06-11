@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
+#
+# ACM Digital LibraryのデータをScrapbox型式に変換する
+#
 
 require 'net/http'
 require 'net/https'
-
-# acmbib = ACMBib.new(DOI)
-# acmbib.wikititle
-# acmbib.wikibody
 
 class Bib
   USERAGENT = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.0.1) Gecko/20060111 Firefox/1.5.0.1'
@@ -77,9 +76,7 @@ class ACMBib < Bib
       # 1267739
       @id = $1
     end
-    # server = 'portal.acm.org'
     server = 'dl.acm.org'
-    # command = "/beta/downformats.cfm?id=#{@id}&parent_id=#{@parentid}&expformat=endnotes"
     command = "/exportformats.cfm?id=#{@id}&expformat=endnotes"
 
     acmdata = get(server,command)
@@ -129,12 +126,8 @@ class ACMBib < Bib
 [[コメント]]
 [http://dl.acm.org/exportformats.cfm?id=#{@id}&expformat=bibtex BibTeX] [http://dl.acm.org/citation.cfm?id=#{@id} ACM]
 EOF
-#    end
   end
 end
-
-# a = ACMBib.new('http://portal.acm.org/beta/citation.cfm?id=1753326.1753367')
-# puts a.wikibody
 
 class NIIBib < Bib
   def initialize(niistring)
@@ -142,7 +135,6 @@ class NIIBib < Bib
     niistring =~ /(\d+)/
     @naid = $1
     server = 'ci.nii.ac.jp'
-    # command = "/export?fileType=1&docSelect=#{@naid}"
     command = "/naid/#{@naid}.bix"
     refer = get(server,command)
     parse(refer)
@@ -177,9 +169,6 @@ EOF
     end
   end
 end
-
-# a = NIIBib.new('http://ci.nii.ac.jp/naid/110002949476')
-# puts a.wikibody
 
 if $0 == __FILE__ then
   DOI = '1124831'

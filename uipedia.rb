@@ -4,12 +4,8 @@
 
 require 'cgi'
 require 'sinatra'
-# require 'sinatra/cross_origin'
-# require 'json'
 
 require './bibconv'
-
-# enable :cross_origin
 
 get '/index.html' do
   'UIPedia'
