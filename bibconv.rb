@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# ACM Digital LibraryのデータをScrapbox型式に変換する
+# ACM Digital LibraryやCiNiiのデータをScrapbox型式に変換する
 #
 
 require 'net/http'
@@ -26,7 +26,7 @@ class Bib
   end
 
   def get(server,command)
-    http = Net::HTTP.new('dl.acm.org', 443)
+    http = Net::HTTP.new(server, 443)
     http.use_ssl = true
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
@@ -38,9 +38,12 @@ class Bib
   def parse(refer)
     refer.split(/\n/).each { |line|
       line.chomp!
+      # puts line
       if line =~ /^%(.)\s+(.*)$/ then
         key = $1
         value = $2
+        value.force_encoding("utf-8")
+        # puts "key=#{key}, value=#{value}"
         if @data[key].nil? then
           @data[key] = []
         end
@@ -137,6 +140,7 @@ class NIIBib < Bib
     server = 'ci.nii.ac.jp'
     command = "/naid/#{@naid}.bix"
     refer = get(server,command)
+
     parse(refer)
   end
 
@@ -174,4 +178,12 @@ if $0 == __FILE__ then
   DOI = '1124831'
   acmbib = ACMBib.new(DOI)
   puts acmbib.wikibody
+  
+  url = "http://dl.acm.org/citation.cfm?id=1124831"
+  acmbib = ACMBib.new(url)
+  puts acmbib.wikibody
+
+  url = "https://ci.nii.ac.jp/naid/170000076301"
+  niibib = NIIBib.new(url)
+  puts niibib.wikibody
 end
