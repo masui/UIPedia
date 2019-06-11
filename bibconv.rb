@@ -109,7 +109,7 @@ class ACMBib < Bib
 #    if @data['0'][0] == 'Conference Paper' then
       <<EOF
 [[タイトル]]
- #{@data['T'][0]}
+ [https://dl.acm.org/ft_gateway.cfm?id=#{@id} #{@data['T'][0]}]
 [[ソース]]
  #{@data['B'] ? @data['B'][0] : @data['J'] ? @data['J'][0] : ''}
 [[巻]]
