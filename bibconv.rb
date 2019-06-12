@@ -38,7 +38,6 @@ class Bib
   def parse(refer)
     refer.split(/\n/).each { |line|
       line.chomp!
-      # puts line
       if line =~ /^%(.)\s+(.*)$/ then
         key = $1
         value = $2
@@ -76,7 +75,7 @@ class ACMBib < Bib
     elsif doistring =~ /id=(\d+)/ then
       @id = $1
     elsif doistring =~ /(\d+)$/ then
-      # 1267739
+      # e.g. 1267739
       @id = $1
     end
     server = 'dl.acm.org'

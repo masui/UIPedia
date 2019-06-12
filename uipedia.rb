@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 # -*- ruby -*-
-#
 
 require 'cgi'
 require 'sinatra'
